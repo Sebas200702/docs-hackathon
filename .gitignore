@@ -1,0 +1,6 @@
+# Keep home-directory clutter out of this docs repo
+/*
+!/.gitignore
+!/README.md
+!/0[1-9]-*/
+!/1[0-2]-*/
