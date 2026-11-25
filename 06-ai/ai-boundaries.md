@@ -1,22 +1,26 @@
 # Límites de IA
 
+Dueño: AI Specialist.
+
 ## Puede
 
-- Interpretar contexto.
-- Clasificar situaciones.
-- Seleccionar una recomendación estructurada.
-- Explicar recomendaciones.
-- Adaptar lenguaje.
+- Interpretar el contexto financiero estructurado.
+- Seleccionar una recomendación estructurada entre tipos permitidos.
+- Explicar la recomendación en lenguaje cotidiano y cercano, con los números del usuario.
+- Adaptar el tono (sin culpa, sin infantilizar).
+- (P1) Redactar la frase de cada insight agregado a partir de números ya calculados.
 
 ## No puede
 
-- Ejecutar pagos.
+- Ejecutar movimientos ni llamar al PaymentProvider.
 - Modificar saldos.
 - Cambiar porcentajes de responsabilidad.
-- Saltarse límites.
-- Omitir confirmación.
+- Saltarse límites del Policy Engine.
+- Omitir la confirmación.
 - Ser la única fuente de reglas financieras.
+- Recibir email, nombre o identificadores del usuario (se envía solo el estado numérico).
+- Inventar cifras de contexto (estadísticas de la ciudad).
 
 ## Arquitectura
 
-AI → Policy Engine → User → Open Payments.
+LLM / RulesProvider → Policy Engine → Usuario → PaymentProvider (ledger simulado u Open Payments).

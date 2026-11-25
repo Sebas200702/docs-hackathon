@@ -2,11 +2,11 @@
 
 ## Decisión
 
-React/Vite, Bun/Hono/TypeScript, PostgreSQL/Drizzle, Zod, Decision Providers y Open Payments.
+React/Vite, Bun/Hono/TypeScript, PostgreSQL/Drizzle, Zod, Vitest, Decision Providers (LLM + reglas) y Payment Providers (ledger simulado por defecto; Open Payments opcional, ver ADR-007).
 
 ## Razón
 
-Es el stack establecido en el plan técnico y permite implementar el MVP dentro del contexto de la hackathon.
+Es el stack establecido en el plan técnico y permite implementar el MVP dentro de la ventana de construcción de QuiJAM.
 
 ## Consecuencia
 

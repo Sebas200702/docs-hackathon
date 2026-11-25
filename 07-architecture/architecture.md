@@ -2,20 +2,29 @@
 
 ## Capas
 
-Frontend: React + Tailwind + Vite.
+| Capa | Tecnología | Dueño |
+|---|---|---|
+| Frontend | React + Tailwind + Vite (mobile-first) | Frontend |
+| Backend | Bun + Hono + TypeScript + Zod | Backend |
+| Persistencia | PostgreSQL + Drizzle | Backend |
+| Decision layer | `DecisionProvider`: LlmProvider (OpenJEV u otro) + RulesProvider | AI Specialist |
+| Policy layer | Reglas deterministas (función pura) | Backend |
+| Payments | `PaymentProvider`: SimulatedLedgerProvider (default) · OpenPaymentsProvider (opcional) | Backend |
+| Insights | Job de agregación con k ≥ 20 sobre usuarios con consentimiento | AI Specialist + Backend |
+| Observabilidad | AuditLog + DecisionLog + logs estructurados | Backend |
 
-Backend: Bun + Hono + TypeScript.
+Stack según ADR-006.
 
-Persistencia: PostgreSQL + Drizzle.
+## Flujo principal
 
-Decision layer: DecisionProvider + OpenJEV + RulesProvider.
+Frontend → API → Domain → Decision Engine → Policy Engine → User Confirmation → PaymentProvider → Persistence/Audit.
 
-Policy layer: reglas deterministas.
+## Flujo de insights
 
-Payments: Open Payments sandbox/mock.
+Perfiles con consentimiento → agregación por periodo y cohorte → filtro k ≥ 20 → `InsightSnapshot` → `GET /insights/aggregate` → vista institucional.
 
-Observabilidad: audit logs + decision logs + telemetry.
+## Decisiones clave
 
-## Flujo
-
-Frontend → API → Domain → Decision Engine → Policy Engine → User Confirmation → Open Payments → Persistence/Audit.
+- Dependencias externas (LLM, Open Payments) detrás de interfaces y con alternativa local: la demo funciona offline.
+- Policy Engine sin I/O, testeable de forma aislada.
+- Un solo repositorio, un despliegue.

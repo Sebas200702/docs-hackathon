@@ -2,21 +2,29 @@
 
 ## Objetivo
 
-Convertir una recomendación de distribución en una operación aprobada.
+Convertir una recomendación aprobada en una separación de dinero hacia una meta.
 
-## Ejemplo
+## Ejemplo (seed, ledger simulado)
 
-Ingreso → Sistema calcula capacidad → Recomienda $20 → Usuario aprueba → Open Payments mueve $20 → Meta aumenta → Progreso actualizado.
+Valentina: capacidad segura 150.000 → recomendación 76.000 a "Portátil" → aprueba → `SimulatedLedgerProvider` registra:
+
+| Cuenta | Antes | Entrada | Después |
+|---|---|---|---|
+| Disponible | 450.000 | −76.000 | 374.000 |
+| Meta · Portátil | 300.000 | +76.000 | 376.000 |
+
+Meta al 20,9 %, +10 puntos, badge "Primer paso".
+
+Nota: el saldo "Disponible" del ledger y `liquidBalance` del perfil se mantienen iguales; tras el movimiento la capacidad segura pasa a 74.000.
 
 ## Controles
 
-- Cantidad.
-- Destino.
-- Capacidad.
-- Confirmación.
-- Idempotencia.
-- Auditoría.
+- Monto ≤ capacidad segura (BR-001).
+- Destino perteneciente al usuario o a un grupo del que es miembro.
+- Confirmación explícita (BR-020).
+- Idempotencia (BR-021).
+- Auditoría (BR-022).
 
 ## Futuro
 
-El concepto puede evolucionar hacia aportes recurrentes y reglas de separación programada.
+Aportes recurrentes y reglas de separación programada, siempre con consentimiento revocable; con Open Payments, mediante autorizaciones explícitas del usuario.

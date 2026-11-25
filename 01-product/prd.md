@@ -2,34 +2,38 @@
 
 ## 1. Resumen
 
-Copiloto de Salud Financiera es un sistema de presupuesto autónomo orientado a mejorar la calidad financiera del usuario, no solo a registrar gastos. Busca que gestionar dinero sea ligero, comprensible y accionable.
+Copiloto de Salud Financiera es un sistema de presupuesto autónomo para jóvenes de Barranquilla con ingresos limitados. Busca que gestionar dinero sea ligero, comprensible y accionable, y que las metas que abren oportunidades avancen. Se presenta en QuiJAM 2026, eje Economía y oportunidades.
 
 ## 2. Problema
 
-La gestión financiera puede convertirse en una tarea repetitiva: registrar movimientos, categorizar gastos, revisar dashboards y decidir manualmente qué hacer con el dinero.
+La gestión financiera se vuelve una tarea repetitiva: registrar, categorizar, revisar dashboards y decidir manualmente qué hacer con el dinero. Para un joven con ingresos irregulares, el costo de no hacerlo es alto: se quedan sin margen a fin de mes y abandonan metas como un portátil, un curso o un emprendimiento.
+
+Magnitud del problema en Barranquilla: [DATO POR VERIFICAR — fuente sugerida: DANE GEIH (desempleo e informalidad juvenil), SPADIES/MEN (deserción), Banca de las Oportunidades (ahorro e inclusión financiera)].
 
 El producto aborda la fricción entre conocer el estado financiero y actuar sobre él.
 
 ## 3. Oportunidad
 
-Construir una experiencia centrada en decisiones y hábitos, donde el sistema reduzca la carga operativa y convierta la gestión financiera en pequeñas acciones con progreso visible.
+Una experiencia centrada en decisiones y hábitos, donde el sistema reduzca la carga operativa y convierta la gestión financiera en pequeñas acciones con progreso visible. Para la ciudad: una fuente agregada y anónima sobre la fragilidad financiera juvenil.
 
 ## 4. Visión
 
-Crear un copiloto financiero que organice el presupuesto, detecte oportunidades, recomiende acciones, ayude a construir hábitos y permita automatizar distribuciones de dinero mediante Open Payments.
+Un copiloto que organice el presupuesto, detecte oportunidades, recomiende acciones seguras, ayude a construir hábitos y separe dinero hacia metas con aprobación del usuario, mediante un adaptador de pagos (ledger simulado hoy; Open Payments u otros proveedores mañana).
 
 ## 5. Objetivos
 
-- Reducir la fricción de gestionar un presupuesto.
-- Aumentar la claridad sobre el dinero disponible.
-- Ayudar a ahorrar y cumplir metas.
-- Reducir carga mental y lenguaje culpabilizante.
-- Convertir recomendaciones aprobadas en acciones mediante Open Payments.
-- Crear una experiencia motivante mediante progreso y gamificación.
+| ID | Objetivo | Señal verificable en la demo |
+|---|---|---|
+| O1 | Reducir la fricción de presupuestar | Onboarding en ≤6 campos y <2 min (AC-010) |
+| O2 | Claridad sobre el dinero disponible | Dashboard muestra comprometido, disponible y capacidad segura (AC-020) |
+| O3 | Ahorrar para metas de oportunidad | Aporte aprobado actualiza la meta (AC-050) |
+| O4 | Proteger obligaciones | Ninguna recomendación supera capacidad segura (FS-01 … FS-04) |
+| O5 | Motivar sin culpa | Copy revisado sin lenguaje culpabilizante (NFR-021) |
+| O6 | Aportar valor a la ciudad | Vista de insights agregados con umbral de anonimato (AC-090) |
 
 ## 6. Usuario objetivo
 
-Estudiantes universitarios con ingresos limitados que utilizan herramientas digitales, tienen gastos recurrentes y quieren mejorar la gestión de su dinero sin mantener sistemas manuales complejos.
+Universitarios y aprendices SENA en Barranquilla y su área metropolitana, con ingresos limitados e irregulares, que usan el celular para todo y quieren avanzar en metas sin mantener sistemas manuales. Ver `personas.md`.
 
 ## 7. Propuesta de valor
 
@@ -37,67 +41,46 @@ Estudiantes universitarios con ingresos limitados que utilizan herramientas digi
 
 ## 8. Principios
 
-1. Automatizar lo repetitivo.
-2. Explicar, no solo mostrar.
-3. Motivar sin infantilizar.
-4. Premiar progreso, no perfección.
-5. Mantener control visible.
-6. Usar Open Payments donde cambie realmente la experiencia.
-7. Proteger obligaciones antes de optimizar.
+Ver `product-principles.md`.
 
 ## 9. Casos de uso
 
-- Presupuesto inicial automático.
-- Lectura del estado financiero.
-- Recomendaciones semanales.
-- Metas financieras.
-- Ahorro automatizado aprobado.
-- Distribución de ingresos extraordinarios.
-- Retos y hábitos.
-- Metas grupales.
-- Revisión semanal.
+| Caso | Prioridad | Persona |
+|---|---|---|
+| Presupuesto inicial automático | P0 | Valentina |
+| Lectura del estado financiero | P0 | Valentina |
+| Recomendación de aporte a meta + aprobación + separación | P0 | Valentina |
+| Chequeo "¿me alcanza?" | P1 | Valentina |
+| Capacidad cero sin culpa | P1 | Andrés |
+| Gamificación básica (racha, nivel, reto) | P1 | Todas |
+| Insights agregados (datos sintéticos) | P1 | Institucional |
+| Meta grupal | P1 | Mariana |
+| Distribución de ingreso extra, revisión semanal | P2 | Todas |
 
-## 10. Open Payments
+## 10. Capa de ejecución de pagos
 
-Open Payments funciona como la capa que permite pasar de una recomendación a una distribución de dinero. Para el MVP se utilizan cuentas/wallets demo y simulación donde corresponda.
+La recomendación aprobada se materializa a través de un `PaymentProvider`:
 
-Flujo conceptual:
+- **MVP (real en la demo):** `SimulatedLedgerProvider`, ledger de doble entrada con bolsillos (Disponible, Meta, Grupo).
+- **Opcional:** `OpenPaymentsProvider` contra wallets de prueba compatibles con Open Payments. Solo se integra si el P0 está terminado (ADR-007). No es requisito para demostrar el producto ni el objetivo del concurso.
 
-Recomendación → Confirmación → Open Payments → Movimiento → Actualización → Registro.
+Flujo: Recomendación → Policy Engine → Confirmación → PaymentProvider → Movimiento → Actualización → Registro. Detalle en `05-open-payments/`.
 
 ## 11. Gamificación
 
-La gamificación es una parte importante de la experiencia, no un adorno. Debe reforzar comportamientos financieros útiles mediante niveles, progreso, rachas, retos y badges, evitando competencia agresiva o diseño infantil.
+Refuerza comportamientos útiles mediante niveles, progreso, rachas, retos y badges, sin competencia agresiva ni diseño infantil. Ver `03-ux/gamification.md`.
 
 ## 12. MVP
 
-### P0
-
-- Login.
-- Onboarding financiero.
-- Presupuesto automático.
-- Dashboard/estado financiero.
-- Motor de recomendaciones.
-- Metas.
-- Open Payments.
-- Confirmación.
-- Registro/auditoría.
-
-### P1
-
-- Revisión semanal.
-- Retos.
-- Niveles/progreso.
-- Meta grupal.
-- Simulador.
+Ver `02-requirements/mvp-scope.md` (fuente única de alcance, con real vs simulado).
 
 ### Fuera de alcance
 
 - Trading e inversión.
-- Préstamos.
-- Scoring crediticio.
+- Préstamos y scoring crediticio.
 - Marketplace financiero.
-- Integraciones bancarias complejas.
+- Integraciones bancarias o con billeteras comerciales reales.
+- Movimiento de dinero real.
 - OCR.
 - Leaderboards públicos.
 - Automatizaciones irreversibles.
@@ -105,17 +88,22 @@ La gamificación es una parte importante de la experiencia, no un adorno. Debe r
 
 ## 13. Éxito
 
-El MVP debe demostrar que un usuario puede pasar de información financiera mínima a una decisión recomendada, aprobarla y materializar una distribución mediante Open Payments sin comprometer sus obligaciones.
+En la demo, un usuario pasa de información financiera mínima a una recomendación explicada, la aprueba y ve la separación aplicada a su meta en el ledger simulado, sin comprometer sus obligaciones. Ante una compra que no le alcanza, recibe una respuesta honesta. La institución ve un insight agregado sin datos individuales.
+
+Después de la hackatón (piloto): proporción de metas con al menos un aporte mensual y proporción de usuarios con capacidad segura cero a fin de mes. Línea base: [DATO POR VERIFICAR — se mide en el piloto; no hay dato previo].
 
 ## 14. Riesgos
 
-- Exceso de funcionalidades.
-- Gamificación infantil.
-- Automatización opaca.
-- Recomendaciones genéricas.
-- Riesgo financiero por decisiones incorrectas.
-- Fallos de proveedores externos.
+| Riesgo | Mitigación |
+|---|---|
+| Exceso de funcionalidades | Regla de alcance y punto de control de las 18:00 (`00-quijam/plan-48h.md`) |
+| Gamificación infantil | Revisión de UI/UX; badges ligados a conducta financiera |
+| Automatización opaca | Pantalla de confirmación con monto, origen, destino y razón |
+| Recomendaciones genéricas | Explicación con números del propio usuario |
+| Decisiones financieras incorrectas | Policy Engine + tests FS-01 … FS-10 |
+| Fallo de proveedores (IA, pagos, red) | RulesProvider, ledger simulado, demo local |
+| Jurado percibe tecnología sin necesidad real | Pitch abre con persona y ciudad; Open Payments queda en segundo plano |
 
 ## 15. Definición del producto
 
-> Copiloto de Salud Financiera es un sistema de presupuesto autónomo para estudiantes universitarios con ingresos limitados que reduce la fricción de gestionar dinero mediante recomendaciones, automatización y progreso. Su autonomía está controlada: el sistema propone, las reglas protegen, el usuario aprueba y Open Payments materializa la acción.
+> Copiloto de Salud Financiera es un sistema de presupuesto autónomo para jóvenes de Barranquilla con ingresos limitados que reduce la fricción de gestionar dinero mediante recomendaciones seguras, separación aprobada de dinero hacia metas de oportunidad y progreso visible. Su autonomía está controlada: el sistema propone, las reglas protegen, el usuario aprueba y el proveedor de pagos materializa la acción.
