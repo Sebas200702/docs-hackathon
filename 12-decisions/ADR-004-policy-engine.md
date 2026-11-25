@@ -10,4 +10,4 @@ La seguridad financiera no puede depender exclusivamente de un proveedor probabi
 
 ## Consecuencia
 
-OpenJEV puede fallar sin comprometer la seguridad del flujo.
+El LLM (Gemini, ADR-006) puede fallar o equivocarse sin comprometer la seguridad del flujo: su salida nunca mueve dinero sin pasar por estas reglas.

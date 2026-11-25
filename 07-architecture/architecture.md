@@ -7,7 +7,7 @@
 | Frontend | React + Tailwind + Vite (mobile-first) | Frontend |
 | Backend | Bun + Hono + TypeScript + Zod | Backend |
 | Persistencia | PostgreSQL + Drizzle | Backend |
-| Decision layer | `DecisionProvider`: LlmProvider (OpenJEV u otro) + RulesProvider | AI Specialist |
+| Decision layer | `DecisionProvider`: LlmProvider (Gemini API) + RulesProvider | AI Specialist |
 | Policy layer | Reglas deterministas (función pura) | Backend |
 | Payments | `PaymentProvider`: SimulatedLedgerProvider (default) · OpenPaymentsProvider (opcional) | Backend |
 | Insights | Job de agregación con k ≥ 20 sobre usuarios con consentimiento | AI Specialist + Backend |
@@ -25,6 +25,6 @@ Perfiles con consentimiento → agregación por periodo y cohorte → filtro k �
 
 ## Decisiones clave
 
-- Dependencias externas (LLM, Open Payments) detrás de interfaces y con alternativa local: la demo funciona offline.
+- Dependencias externas (Gemini, Open Payments) detrás de interfaces y con alternativa local: la demo funciona offline.
 - Policy Engine sin I/O, testeable de forma aislada.
 - Un solo repositorio, un despliegue.

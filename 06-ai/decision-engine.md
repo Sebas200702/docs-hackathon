@@ -12,12 +12,12 @@ Financial state → `DecisionRequest` → `DecisionProvider` → `DecisionRespon
 
 | Provider | Rol | Nota |
 |---|---|---|
-| `LlmProvider` (OpenJEV u otro LLM) | Selecciona y explica | Timeout 1,5 s. Modelo concreto lo fija el AI Specialist en el evento según conectividad. |
+| `LlmProvider` (Gemini API) | Selecciona y explica | Modelo de clase Flash; la versión exacta la fija el AI Specialist en el evento (`GEMINI_MODEL`). Timeout 1,5 s. Llave solo en el servidor (ADR-006). |
 | `RulesProvider` | Fallback determinista | Implementa `04-domain/financial-model.md`. Debe existir antes que el LLM. |
 
-Ambos cumplen la misma interfaz; se pueden añadir otros sin cambiar el dominio.
+Ambos cumplen la misma interfaz `DecisionProvider`; cambiar Gemini por otro proveedor no toca el dominio.
 
-## Entrada al LLM (sin datos personales)
+## Entrada a Gemini (sin datos personales)
 
 ```json
 {

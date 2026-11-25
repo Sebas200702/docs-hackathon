@@ -10,7 +10,7 @@ Git → Build → Docker → VPS/Dokploy → Health check → Seed/demo verifica
 
 ## Variables
 
-`DATABASE_URL`, `SESSION_SECRET`, `DEMO_MODE`, `DECISION_PROVIDER` (`llm`/`rules`), `LLM_API_KEY` (si aplica), `PAYMENTS_PROVIDER` (default `simulated`), credenciales de Open Payments (solo si se integra).
+`DATABASE_URL`, `SESSION_SECRET`, `DEMO_MODE`, `DECISION_PROVIDER` (`llm`/`rules`), `GEMINI_API_KEY` (llave de Google AI Studio; solo en el servidor, nunca en el frontend ni en el repo), `GEMINI_MODEL` (modelo de clase Flash; lo fija el AI Specialist en el evento), `PAYMENTS_PROVIDER` (default `simulated`), credenciales de Open Payments (solo si se integra).
 
 ## Checklist (vie 08:00)
 
